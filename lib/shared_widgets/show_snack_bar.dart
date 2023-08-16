@@ -3,7 +3,7 @@ import 'dart:developer';
 import '../../core/exceptions/redundant_request_exception.dart';
 import 'package:flutter/material.dart';
 
-import '../res/app_colors.dart';
+import '../res/colors/app_colors.dart';
 
 void showSnackBar(
   BuildContext context, {

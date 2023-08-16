@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:news_app/features/articles/data/models/article.dart';
 
 import '../../../../core/di.dart';
-import '../../../../res/app_colors.dart';
+import '../../../../res/colors/app_colors.dart';
 import '../../../../shared_widgets/main_text.dart';
 import '../../../../shared_widgets/show_snack_bar.dart';
 import '../cubits/cubit/articles_cubit.dart';
@@ -16,32 +16,19 @@ class ArticlesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.BACKGROUND_COLOR,
-      appBar: AppBar(
-        title: const Text('Link Development'),
-      ),
-      body: BlocProvider<ArticlesCubit>(
-        lazy: false,
-        create: (context) => Injector().articlesCubit..loadArticles(),
-        child: BlocConsumer<ArticlesCubit, ArticlesState>(
-          listener: (context, state) {
-            if (state.isError) {
-              showSnackBar(
-                context,
-                message: state.errorMessage,
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state.isLoading)
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            if (state.articles?.isNotEmpty != true) return errorWidget(context);
-            return _buildBody(context);
-          },
-        ),
+    return BlocProvider<ArticlesCubit>(
+      lazy: false,
+      create: (context) => Injector().articlesCubit..loadArticles(),
+      child: BlocConsumer<ArticlesCubit, ArticlesState>(
+        listener: (context, state) {
+          if (state.isError) showSnackBar(context, message: state.errorMessage);
+        },
+        builder: (context, state) {
+          if (state.isLoading)
+            return const Center(child: CircularProgressIndicator());
+          if (state.articles?.isNotEmpty != true) return errorWidget(context);
+          return _buildBody(context);
+        },
       ),
     );
   }

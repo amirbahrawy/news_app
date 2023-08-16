@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:requests_inspector/requests_inspector.dart';
 
-import 'features/articles/presentation/pages/articles_page.dart';
+import 'features/home/home_page.dart';
 
 const inspectorEnabled = true;
 
 void main() {
-  runApp(const RequestsInspector(enabled: inspectorEnabled, child: MainApp()));
+  runApp(const RequestsInspector(
+    enabled: inspectorEnabled,
+    child: MainApp(),
+  ));
 }
 
 class MainApp extends StatelessWidget {
@@ -15,9 +18,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: const ArticlesPage(),
-        theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
-        ));
+      home: const HomePage(),
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+    );
   }
 }
