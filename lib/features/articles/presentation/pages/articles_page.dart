@@ -58,25 +58,29 @@ class ArticlesPage extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    final state = context.read<ArticlesCubit>().state;
+    final cubit = context.read<ArticlesCubit>();
+    final articles = cubit.state.articles;
     return SizedBox(
       width: double.infinity,
-      child: Column(
-        children: [
-          const SizedBox(height: 16),
-          Expanded(
-            child: ListView.builder(
-              itemCount: state.articles?.length ?? 0,
-              itemBuilder: (context, index) {
-                final article = state.articles![index];
-                return ArticleItem(
-                  article: article,
-                  onTap: () => _goToArticleDetails(context, article),
-                );
-              },
+      child: RefreshIndicator(
+        onRefresh: cubit.refresh,
+        child: Column(
+          children: [
+            const SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: articles?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final article = articles![index];
+                  return ArticleItem(
+                    article: article,
+                    onTap: () => _goToArticleDetails(context, article),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
