@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../res/colors/app_colors.dart';
+import '../../shared_widgets/app_bar.dart';
 import '../../shared_widgets/main_text.dart';
 import '../articles/presentation/pages/articles_page.dart';
 
@@ -9,39 +10,42 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.BACKGROUND_COLOR,
-      appBar: _buildAppBar(),
-      body: const ArticlesPage(),
-      drawer: _buildDrawer(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.BACKGROUND_COLOR,
+        appBar: _buildAppBar(),
+        body: const ArticlesPage(),
+        drawer: _buildDrawer(),
+      ),
     );
   }
 
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: const Text('Link Development'),
-      leading: Builder(
-        builder: (context) => IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () => Scaffold.of(context).openDrawer(),
+  PreferredSize _buildAppBar() {
+    return PreferredSize(
+      preferredSize: CustomAppBar.preferredSize,
+      child: CustomAppBar(
+        title: 'New Articles',
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {},
+          ),
+        ],
       ),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {},
-        ),
-      ],
     );
   }
 
   _buildDrawer() {
-    // make drawer with circular avatar and behind it welcome
-    // and under it name and behind it arrow Image and under it list of items(icon and text)
     return Drawer(
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 48.0,
+          vertical: 64.0,
           horizontal: 16.0,
         ),
         child: Column(
@@ -70,8 +74,8 @@ class HomePage extends StatelessWidget {
                 const Spacer(),
                 Image.asset(
                   'lib/res/images/arrow.png',
-                  height: 42.0,
-                  width: 42.0,
+                  height: 36.0,
+                  width: 36.0,
                 ),
               ],
             ),
@@ -89,8 +93,11 @@ class HomePage extends StatelessWidget {
                     onTap: () {
                       showDialog(
                         context: context,
-                        builder: (context) =>
-                            AlertDialog(content: MainText(text: item.key)),
+                        builder: (context) => AlertDialog(
+                            content: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: MainText(text: item.key),
+                        )),
                       );
                     },
                   );

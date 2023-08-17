@@ -1,4 +1,3 @@
-import '../../../../constants/constants.dart';
 import '../../../../core/enums/status_enum.dart';
 import '../../../../core/exceptions/request_exception.dart';
 import '../../../../core/network/api_endpoint.dart';
@@ -23,7 +22,7 @@ class ArticlesRemoteDataSourceImpl implements ArticlesRateRemoteDataSource {
       'apiKey': API_KEY,
     };
     final associatedParm = {
-      'source': 'the-next-web',
+      'source': 'associated-press',
       'apiKey': API_KEY,
     };
 

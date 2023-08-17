@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:requests_inspector/requests_inspector.dart';
 
 import 'features/home/home_page.dart';
+import 'res/colors/app_colors.dart';
 
-const inspectorEnabled = true;
+const inspectorEnabled = false;
 
 void main() {
   runApp(const RequestsInspector(
@@ -18,8 +19,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const HomePage(),
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      theme: ThemeData(primarySwatch: AppColors.PRIMARY_COLOR),
     );
   }
 }

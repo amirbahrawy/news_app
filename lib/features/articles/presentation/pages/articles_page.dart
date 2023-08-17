@@ -8,8 +8,10 @@ import '../../../../core/di.dart';
 import '../../../../res/colors/app_colors.dart';
 import '../../../../shared_widgets/main_text.dart';
 import '../../../../shared_widgets/show_snack_bar.dart';
+import '../../widgets/article_item.dart';
 import '../cubits/cubit/articles_cubit.dart';
 import '../cubits/cubit/articles_state.dart';
+import 'article_details.dart';
 
 class ArticlesPage extends StatelessWidget {
   const ArticlesPage({super.key});
@@ -67,7 +69,10 @@ class ArticlesPage extends StatelessWidget {
               itemCount: state.articles?.length ?? 0,
               itemBuilder: (context, index) {
                 final article = state.articles![index];
-                return _buildArticleItem(article);
+                return ArticleItem(
+                  article: article,
+                  onTap: () => _goToArticleDetails(context, article),
+                );
               },
             ),
           ),
@@ -76,44 +81,10 @@ class ArticlesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildArticleItem(Article article) {
-    final date = DateTime.parse(article.publishedAt!);
-    final formattedDate = DateFormat('MMMM d, yyyy').format(date);
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(
-              article.urlToImage ?? '',
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 8),
-            MainText(
-              text: article.title ?? '',
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-            const SizedBox(height: 8),
-            MainText(
-              text: 'By ${article.author ?? ''}',
-              fontSize: 14,
-            ),
-            const SizedBox(height: 8),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: MainText(
-                text: formattedDate,
-                color: AppColors.TEXT_GREY,
-                fontSize: 12,
-              ),
-            ),
-          ],
-        ),
+  void _goToArticleDetails(BuildContext context, Article article) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ArticleDetails(article),
       ),
     );
   }
